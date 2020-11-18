@@ -1,0 +1,46 @@
+import pyautogui
+from PIL import Image , ImageGrab
+from numpy import asarray
+import time
+
+def hit(key):
+    pyautogui.keyDown(key)
+
+def isCollide(data):
+    for i in range(300, 365):
+        for j in range(420 , 480):
+            if data[i,j] < 100:
+                return  True
+    return False            
+    
+def isCollide_upside(data):
+    for i in range(300, 370):
+        for j in range(370, 390):
+            if data[i,j] < 100:
+                return  True
+    return False
+
+def isCollide_downside(data):
+    for i in range(300, 370):
+        for j in range(470, 480):
+            if data[i,j] < 100:
+                return  True
+    return False
+
+
+if __name__ =="__main__":
+    print("Dino Game is about to start in 2 seconds")
+    time.sleep(2)
+    hit("space")
+    while True:
+        image = ImageGrab.grab().convert("L")
+        data = image.load()
+        if isCollide_downside(data):
+            hit("up")
+        if isCollide(data):
+            hit("down")
+
+        if isCollide_upside(data):
+            hit("down")
+        #print(asarray(image))
+    #image.show()           
